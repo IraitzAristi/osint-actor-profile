@@ -1,0 +1,274 @@
+[
+  {
+    "id": "ipv4:31.13.195.87",
+    "type": "ipv4",
+    "value": "31.13.195.87",
+    "sources": [
+      "Team Cymru 2023",
+      "otx",
+      "seed",
+      "virustotal"
+    ],
+    "first_seen": null,
+    "last_seen": null,
+    "attrs": {
+      "frozen": true,
+      "asn": "34224",
+      "prefix": "31.13.195.0/24"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "ipv4:87.121.52.9",
+    "type": "ipv4",
+    "value": "87.121.52.9",
+    "sources": [
+      "Team Cymru 2023",
+      "seed"
+    ],
+    "first_seen": null,
+    "last_seen": null,
+    "attrs": {
+      "asn": "34224",
+      "prefix": "87.121.52.0/24",
+      "ports": [
+        22
+      ],
+      "tags": [],
+      "domain_fanout": 20,
+      "shared_infra": true
+    },
+    "status": "seed"
+  },
+  {
+    "id": "ipv4:109.107.184.11",
+    "type": "ipv4",
+    "value": "109.107.184.11",
+    "sources": [
+      "Team Cymru 2023",
+      "seed"
+    ],
+    "first_seen": null,
+    "last_seen": null,
+    "attrs": {
+      "asn": "216071",
+      "prefix": "109.107.184.0/24"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "ipv4:185.173.37.220",
+    "type": "ipv4",
+    "value": "185.173.37.220",
+    "sources": [
+      "Team Cymru 2023",
+      "seed"
+    ],
+    "first_seen": null,
+    "last_seen": null,
+    "attrs": {
+      "asn": "212441",
+      "prefix": "185.173.37.0/24"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "ipv4:91.142.79.201",
+    "type": "ipv4",
+    "value": "91.142.79.201",
+    "sources": [
+      "Team Cymru 2023",
+      "seed"
+    ],
+    "first_seen": null,
+    "last_seen": null,
+    "attrs": {
+      "asn": "212441",
+      "prefix": "91.142.79.0/24"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "domain:tom56gaz6poh13f28.myftp.org",
+    "type": "domain",
+    "value": "tom56gaz6poh13f28.myftp.org",
+    "sources": [
+      "Team Cymru 2023",
+      "seed"
+    ],
+    "first_seen": null,
+    "last_seen": null,
+    "attrs": {},
+    "status": "seed"
+  },
+  {
+    "id": "domain:zig35m48zur14nel40.myftp.org",
+    "type": "domain",
+    "value": "zig35m48zur14nel40.myftp.org",
+    "sources": [
+      "Team Cymru 2023",
+      "seed"
+    ],
+    "first_seen": null,
+    "last_seen": null,
+    "attrs": {},
+    "status": "seed"
+  },
+  {
+    "id": "ipv4:185.122.187.217",
+    "type": "ipv4",
+    "value": "185.122.187.217",
+    "sources": [
+      "seed"
+    ],
+    "first_seen": null,
+    "last_seen": null,
+    "attrs": {
+      "malware": "Dosia",
+      "threatfox_tags": [
+        "botnet",
+        "DDoS",
+        "DDoSia",
+        "dosia",
+        "noname057"
+      ],
+      "asn": "9009",
+      "prefix": "185.122.187.0/24"
+    },
+    "status": "seed"
+  },
+  {
+    "id": "ipv4:185.76.78.136",
+    "type": "ipv4",
+    "value": "185.76.78.136",
+    "sources": [
+      "seed"
+    ],
+    "first_seen": null,
+    "last_seen": null,
+    "attrs": {
+      "malware": "Dosia",
+      "threatfox_tags": [
+        "botnet",
+        "c2",
+        "DDoS",
+        "DDoSia",
+        "noname057"
+      ],
+      "asn": "9009",
+      "prefix": "185.76.78.0/24",
+      "ports": [
+        22,
+        80
+      ],
+      "tags": []
+    },
+    "status": "seed"
+  },
+  {
+    "id": "asn:as34224",
+    "type": "asn",
+    "value": "AS34224",
+    "sources": [
+      "ripestat"
+    ],
+    "first_seen": null,
+    "last_seen": null,
+    "attrs": {},
+    "status": "context"
+  },
+  {
+    "id": "asn:as216071",
+    "type": "asn",
+    "value": "AS216071",
+    "sources": [
+      "ripestat"
+    ],
+    "first_seen": null,
+    "last_seen": null,
+    "attrs": {},
+    "status": "context"
+  },
+  {
+    "id": "asn:as212441",
+    "type": "asn",
+    "value": "AS212441",
+    "sources": [
+      "ripestat"
+    ],
+    "first_seen": null,
+    "last_seen": null,
+    "attrs": {},
+    "status": "context"
+  },
+  {
+    "id": "ipv4:8.8.8.8",
+    "type": "ipv4",
+    "value": "8.8.8.8",
+    "sources": [
+      "virustotal"
+    ],
+    "first_seen": null,
+    "last_seen": null,
+    "attrs": {
+      "asn": "15169",
+      "prefix": "8.8.8.0/24",
+      "shared_infra": true,
+      "ports": [
+        53,
+        443
+      ],
+      "tags": [],
+      "domain_fanout": 2
+    },
+    "status": "context"
+  },
+  {
+    "id": "asn:as9009",
+    "type": "asn",
+    "value": "AS9009",
+    "sources": [
+      "ripestat"
+    ],
+    "first_seen": null,
+    "last_seen": null,
+    "attrs": {},
+    "status": "context"
+  },
+  {
+    "id": "asn:as15169",
+    "type": "asn",
+    "value": "AS15169",
+    "sources": [
+      "ripestat"
+    ],
+    "first_seen": null,
+    "last_seen": null,
+    "attrs": {},
+    "status": "context"
+  },
+  {
+    "id": "ipv4:77.91.122.69",
+    "type": "ipv4",
+    "value": "77.91.122.69",
+    "sources": [
+      "Team Cymru 2023"
+    ],
+    "first_seen": null,
+    "last_seen": null,
+    "attrs": {},
+    "status": "candidate"
+  },
+  {
+    "id": "domain:api.telegram.org",
+    "type": "domain",
+    "value": "api.telegram.org",
+    "sources": [
+      "Team Cymru 2023"
+    ],
+    "first_seen": null,
+    "last_seen": null,
+    "attrs": {},
+    "status": "context"
+  }
+]

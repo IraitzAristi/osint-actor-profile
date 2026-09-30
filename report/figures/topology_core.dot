@@ -1,0 +1,21 @@
+digraph "NoName057(16)" {
+  rankdir=LR; node [style=filled,fontname="Helvetica"];
+  "ipv4:31.13.195.87" [label="31.13.195.87",shape=ellipse,fillcolor="#2563eb",fontcolor="white"];
+  "ipv4:87.121.52.9" [label="87.121.52.9",shape=ellipse,fillcolor="#2563eb",fontcolor="white"];
+  "ipv4:109.107.184.11" [label="109.107.184.11",shape=ellipse,fillcolor="#2563eb",fontcolor="white"];
+  "ipv4:185.173.37.220" [label="185.173.37.220",shape=ellipse,fillcolor="#2563eb",fontcolor="white"];
+  "ipv4:91.142.79.201" [label="91.142.79.201",shape=ellipse,fillcolor="#2563eb",fontcolor="white"];
+  "domain:tom56gaz6poh13f28.myftp.org" [label="tom56gaz6poh13f28.myftp.org",shape=box,fillcolor="#2563eb",fontcolor="white"];
+  "domain:zig35m48zur14nel40.myftp.org" [label="zig35m48zur14nel40.myftp.org",shape=box,fillcolor="#2563eb",fontcolor="white"];
+  "ipv4:77.91.122.69" [label="77.91.122.69",shape=ellipse,fillcolor="#e5e7eb",fontcolor="black"];
+  "domain:api.telegram.org" [label="api.telegram.org",shape=box,fillcolor="#f3f4f6",fontcolor="black"];
+  "domain:tom56gaz6poh13f28.myftp.org" -> "ipv4:31.13.195.87" [label="resolves_to_reported",style=solid];
+  "domain:zig35m48zur14nel40.myftp.org" -> "ipv4:31.13.195.87" [label="resolves_to_reported",style=solid];
+  "ipv4:31.13.195.87" -> "ipv4:87.121.52.9" [label="mirror_of",style=solid];
+  "ipv4:87.121.52.9" -> "ipv4:109.107.184.11" [label="communicates_with",style=solid];
+  "ipv4:87.121.52.9" -> "ipv4:185.173.37.220" [label="communicates_with",style=solid];
+  "ipv4:91.142.79.201" -> "ipv4:87.121.52.9" [label="communicates_with",style=solid];
+  "ipv4:91.142.79.201" -> "ipv4:31.13.195.87" [label="communicates_with",style=solid];
+  "ipv4:77.91.122.69" -> "ipv4:87.121.52.9" [label="mirror_of",style=solid];
+  "ipv4:87.121.52.9" -> "domain:api.telegram.org" [label="communicates_with",style=dotted];
+}

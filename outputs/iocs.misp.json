@@ -1,0 +1,164 @@
+{
+  "Event": {
+    "info": "NoName057(16) - reconstructed C2 infrastructure (open-source, snapshot C2-documented-2022-2026)",
+    "date": "2026-09-23",
+    "threat_level_id": "2",
+    "analysis": "2",
+    "distribution": "0",
+    "Orgc": {
+      "name": "Iraitz Aristi"
+    },
+    "Tag": [
+      {
+        "name": "tlp:clear"
+      },
+      {
+        "name": "NoName057(16)"
+      },
+      {
+        "name": "DDoSia"
+      },
+      {
+        "name": "Dosia"
+      }
+    ],
+    "Attribute": [
+      {
+        "type": "ip-dst",
+        "category": "Network activity",
+        "value": "31.13.195.87",
+        "to_ids": false,
+        "distribution": "0",
+        "comment": "status=seed; sources=Team Cymru 2023, otx, seed, virustotal"
+      },
+      {
+        "type": "ip-dst",
+        "category": "Network activity",
+        "value": "87.121.52.9",
+        "to_ids": true,
+        "distribution": "0",
+        "comment": "status=seed; sources=Team Cymru 2023, seed; feed-attributed"
+      },
+      {
+        "type": "ip-dst",
+        "category": "Network activity",
+        "value": "109.107.184.11",
+        "to_ids": false,
+        "distribution": "0",
+        "comment": "status=seed; sources=Team Cymru 2023, seed"
+      },
+      {
+        "type": "ip-dst",
+        "category": "Network activity",
+        "value": "185.173.37.220",
+        "to_ids": false,
+        "distribution": "0",
+        "comment": "status=seed; sources=Team Cymru 2023, seed"
+      },
+      {
+        "type": "ip-dst",
+        "category": "Network activity",
+        "value": "91.142.79.201",
+        "to_ids": false,
+        "distribution": "0",
+        "comment": "status=seed; sources=Team Cymru 2023, seed"
+      },
+      {
+        "type": "domain",
+        "category": "Network activity",
+        "value": "tom56gaz6poh13f28.myftp.org",
+        "to_ids": false,
+        "distribution": "0",
+        "comment": "status=seed; sources=Team Cymru 2023, seed"
+      },
+      {
+        "type": "domain",
+        "category": "Network activity",
+        "value": "zig35m48zur14nel40.myftp.org",
+        "to_ids": false,
+        "distribution": "0",
+        "comment": "status=seed; sources=Team Cymru 2023, seed"
+      },
+      {
+        "type": "ip-dst",
+        "category": "Network activity",
+        "value": "185.122.187.217",
+        "to_ids": true,
+        "distribution": "0",
+        "comment": "status=seed; sources=seed; feed-attributed"
+      },
+      {
+        "type": "ip-dst",
+        "category": "Network activity",
+        "value": "185.76.78.136",
+        "to_ids": true,
+        "distribution": "0",
+        "comment": "status=seed; sources=seed; feed-attributed"
+      },
+      {
+        "type": "AS",
+        "category": "Network activity",
+        "value": "AS34224",
+        "to_ids": false,
+        "distribution": "0",
+        "comment": "status=context; sources=ripestat"
+      },
+      {
+        "type": "AS",
+        "category": "Network activity",
+        "value": "AS216071",
+        "to_ids": false,
+        "distribution": "0",
+        "comment": "status=context; sources=ripestat"
+      },
+      {
+        "type": "AS",
+        "category": "Network activity",
+        "value": "AS212441",
+        "to_ids": false,
+        "distribution": "0",
+        "comment": "status=context; sources=ripestat"
+      },
+      {
+        "type": "ip-dst",
+        "category": "Network activity",
+        "value": "8.8.8.8",
+        "to_ids": false,
+        "distribution": "0",
+        "comment": "status=context; sources=virustotal"
+      },
+      {
+        "type": "AS",
+        "category": "Network activity",
+        "value": "AS9009",
+        "to_ids": false,
+        "distribution": "0",
+        "comment": "status=context; sources=ripestat"
+      },
+      {
+        "type": "AS",
+        "category": "Network activity",
+        "value": "AS15169",
+        "to_ids": false,
+        "distribution": "0",
+        "comment": "status=context; sources=ripestat"
+      },
+      {
+        "type": "ip-dst",
+        "category": "Network activity",
+        "value": "77.91.122.69",
+        "to_ids": false,
+        "distribution": "0",
+        "comment": "status=candidate; sources=Team Cymru 2023"
+      },
+      {
+        "type": "domain",
+        "category": "Network activity",
+        "value": "api.telegram.org",
+        "to_ids": false,
+        "distribution": "0",
+        "comment": "status=context; sources=Team Cymru 2023"
+      }
+    ]
+  }
+}
