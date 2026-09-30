@@ -5,7 +5,7 @@ Passive, open-source reconstruction of a rotating-C2 threat actor's known infras
 
 The pipeline takes published seed indicators, pivots them through free-tier passive sources, merges analyst-curated (report-sourced) relationships, scores every link by confidence, aggressively filters shared/benign infrastructure, and exports an interactive graph plus **STIX 2.1** and **MISP** bundles.
 
-> **The point of this project is not a big graph.** It is *disciplined* pivoting: automated validation and de-duplication of a documented topology, with transparent, reproducible rejection of noise. On this actor the honest result is **zero newly-confirmed infrastructure** beyond what vendors already published - and the repo shows exactly what was filtered and why. What the pipeline *rejects* is as important as what it keeps.
+> **The point of this project is not a big graph.** It is *disciplined* pivoting: automated validation and de-duplication of a documented topology, with transparent, reproducible rejection of noise. On this actor the honest result is **zero newly-confirmed infrastructure** beyond what vendors already published, and the repo shows exactly what was filtered and why. What the pipeline *rejects* is as important as what it keeps.
 
 **Scope:** open sources + passive queries only. Every lookup hits a third-party cache/scanner/database (Certificate Transparency, passive DNS, RDAP/WHOIS, RIPEstat, Shodan InternetDB). The tooling never resolves the actor's names, scans its hosts, or contacts its infrastructure. `TLP:CLEAR`.
 
