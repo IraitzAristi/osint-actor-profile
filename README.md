@@ -1,5 +1,5 @@
 # OSINT ACTOR PROFILE
-snapshot based OSINT infrastructure reconstruction
+## Snapshot Based OSINT Infrastructure Reconstruction
 
 Passive, open-source reconstruction of a rotating-C2 threat actor's known infrastructure, built as an intelligence-analysis exercise, not an investigation. **Case study: NoName057(16) / DDoSia.**
 
