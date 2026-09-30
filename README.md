@@ -55,7 +55,7 @@ pip install -r requirements.txt
 copy .env.example .env              # then fill in free-tier API keys
 ```
 
-All keys are free tier and **optional** - the tool degrades gracefully and uses whatever is present. Keyless sources (crt.sh, RDAP, RIPEstat, Shodan InternetDB, abuse.ch SSLBL feeds) always work.
+All keys are free tier and **optional**, the tool degrades gracefully and uses whatever is present. Keyless sources (crt.sh, RDAP, RIPEstat, Shodan InternetDB, abuse.ch SSLBL feeds) always work.
 
 | Env var | Provider | Where |
 | --- | --- | --- |
