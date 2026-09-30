@@ -1,2 +1,2 @@
 requests>=2.31
-python-dotenv>=1.0   # optional: auto-loads .env; the script runs without it too
+python-dotenv>=1.0   # optional: auto-loads .env, the script runs without it too
