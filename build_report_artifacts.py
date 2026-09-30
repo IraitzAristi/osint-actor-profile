@@ -8,7 +8,7 @@ Reads nodes.json / edges.json (produced by osint_pivot.py) and emits:
   iocs.stix.json   STIX 2.1 bundle (SCOs + indicators + infrastructure + SROs)
   iocs.misp.json   MISP event
 
-Dependency-free (Python stdlib only). This step only transforms local files;
+Dependency-free (Python stdlib only). This step only transforms local files,
 it contacts no infrastructure. Open-source / passive provenance is preserved.
 
 USAGE
@@ -96,9 +96,7 @@ def feed_attributed_ids(edges) -> set:
     return {e["dst"] for e in edges if e["rel"] == "ioc_feed"}
 
 
-# --------------------------------------------------------------------------- #
-# 1) Interactive HTML (vis-network)                                            #
-# --------------------------------------------------------------------------- #
+# 1) Interactive HTML (vis-network)                                           
 NODE_COLOR = {
     "seed":      "#2563eb",  # blue
     "confirmed": "#16a34a",  # green
@@ -132,7 +130,7 @@ def build_html(nodes, edges, attributed, meta) -> str:
         })
     for e in edges:
         if e["src"] == e["dst"]:
-            continue  # self-edges (feed attribution) shown as node badge instead
+            continue # self-edges (feed attribution) shown as node badge instead
         color, dashes = EDGE_STYLE.get(e["weight"], ("#6b7280", True))
         etitle = f"{e['rel']} ({e['weight']}) via {e['source']}"
         if e.get("note"):
@@ -173,9 +171,7 @@ def build_html(nodes, edges, attributed, meta) -> str:
 </script></body></html>"""
 
 
-# --------------------------------------------------------------------------- #
-# 2) Graphviz DOT                                                              #
-# --------------------------------------------------------------------------- #
+# 2) Graphviz DOT                                                              
 def build_dot(nodes, edges, attributed, meta) -> str:
     def esc(s): return str(s).replace('"', '\\"')
     lines = [f'digraph "{esc(meta["actor"])}" {{', '  rankdir=LR; node [style=filled,fontname="Helvetica"];']
@@ -198,9 +194,7 @@ def build_dot(nodes, edges, attributed, meta) -> str:
     return "\n".join(lines)
 
 
-# --------------------------------------------------------------------------- #
-# 3) STIX 2.1 bundle                                                           #
-# --------------------------------------------------------------------------- #
+# 3) STIX 2.1 bundle                                                           
 def build_stix(nodes, edges, attributed, meta) -> dict:
     ts = now()
     objects = []
@@ -306,9 +300,7 @@ def build_stix(nodes, edges, attributed, meta) -> dict:
     return {"type": "bundle", "id": f"bundle--{uuid.uuid4()}", "objects": objects}
 
 
-# --------------------------------------------------------------------------- #
-# 4) MISP event                                                                #
-# --------------------------------------------------------------------------- #
+# 4) MISP event                
 def build_misp(nodes, edges, attributed, meta) -> dict:
     attrs = []
     for n in nodes:
