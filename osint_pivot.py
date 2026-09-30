@@ -123,9 +123,7 @@ DYNAMIC_DNS_APEXES = {
 HEX64 = re.compile(r"^[0-9a-fA-F]{64}$")
 HEX40 = re.compile(r"^[0-9a-fA-F]{40}$")
 
-# --------------------------------------------------------------------------- #
 # Data model                                                                   #
-# --------------------------------------------------------------------------- #
 @dataclass
 class Node:
     id: str
@@ -218,9 +216,7 @@ class Graph:
                 node.status = "context"
 
 
-# --------------------------------------------------------------------------- #
-# HTTP client: retries, per-host min interval, on-disk cache (snapshot-safe).  #
-# --------------------------------------------------------------------------- #
+# HTTP client: retries, per-host min interval, on-disk cache (snapshot-safe). 
 class Http:
     def __init__(self, cache_dir: Path, min_interval: float = 1.0) -> None:
         self.s = requests.Session()
@@ -302,18 +298,16 @@ def parse_date(v) -> str | None:
     s = str(v).strip()
     if not s:
         return None
-    if re.fullmatch(r"\d{9,10}(\.\d+)?", s):          # epoch seconds
+    if re.fullmatch(r"\d{9,10}(\.\d+)?", s): # epoch seconds
         try:
             return time.strftime("%Y-%m-%d", time.gmtime(float(s)))
         except (ValueError, OverflowError, OSError):
             return None
-    m = re.match(r"(\d{4}-\d{2}-\d{2})", s)            # leading ISO date
+    m = re.match(r"(\d{4}-\d{2}-\d{2})", s) # leading ISO date
     return m.group(1) if m else None
 
 
-# --------------------------------------------------------------------------- #
-# Helpers                                                                       #
-# --------------------------------------------------------------------------- #
+# Helpers                                                                       
 def classify_seed(value: str) -> str | None:
     value = value.strip()
     if not value:
@@ -356,20 +350,20 @@ def is_cdn_cloud_asn(asn: int | str | None) -> bool:
 # Fan-out caps: a single IP tied to many domains (or a cert carrying many SANs)
 # is shared / multi-tenant / parked infrastructure, not the actor's. High fan-out
 # is the #1 source of passive-DNS false positives, so we refuse to pivot through it.
-SAN_FANOUT_MAX = 12          # distinct SAN siblings on a domain's certificates
-PDNS_IP_FANOUT_MAX = 15      # distinct domains historically resolving to one IP
-DOMAIN_IP_FANOUT_MAX = 15    # distinct IPs one domain has resolved to
+SAN_FANOUT_MAX = 12 # distinct SAN siblings on a domain's certificates
+PDNS_IP_FANOUT_MAX = 15 # distinct domains historically resolving to one IP
+DOMAIN_IP_FANOUT_MAX = 15 # distinct IPs one domain has resolved to
 
 # Known parking / sinkhole ranges: co-resolution here is noise, not attribution.
 PARKING_NETWORKS = [ipaddress.ip_network(n) for n in (
-    "91.195.240.0/24",   # Sedo parking
-    "208.91.197.0/24",   # Sedo / Above.com
-    "199.59.242.0/23",   # Bodis
-    "198.54.117.0/24",   # Namecheap parking
-    "15.197.128.0/17",   # AWS Route53 domain parking / Global Accelerator
-    "13.248.128.0/17",   # AWS Global Accelerator (parking)
-    "76.223.0.0/17",     # AWS Global Accelerator (parking)
-    "3.33.128.0/17",     # AWS Route53 domain parking
+    "91.195.240.0/24", # Sedo parking
+    "208.91.197.0/24", # Sedo / Above.com
+    "199.59.242.0/23", # Bodis
+    "198.54.117.0/24", # Namecheap parking
+    "15.197.128.0/17", # AWS Route53 domain parking / Global Accelerator
+    "13.248.128.0/17", # AWS Global Accelerator (parking)
+    "76.223.0.0/17", # AWS Global Accelerator (parking)
+    "3.33.128.0/17", # AWS Route53 domain parking
 )]
 
 
@@ -395,10 +389,8 @@ def is_provider_rdns(hostname: str, ip: str) -> bool:
     return all(o in h for o in octets) and any(t in h for t in tokens)
 
 
-# --------------------------------------------------------------------------- #
-# Providers. Each returns lightweight observations; the orchestrator turns      #
-# them into nodes/edges. All are PASSIVE (third-party data only).               #
-# --------------------------------------------------------------------------- #
+# Providers. Each returns lightweight observations; the orchestrator turns      
+# them into nodes/edges. All are PASSIVE (third-party data only).               
 class Providers:
     def __init__(self, http: Http) -> None:
         self.http = http
@@ -423,7 +415,7 @@ class Providers:
             on.append("validin")
         return on
 
-    # ---- crt.sh (Certificate Transparency): domain -> SAN siblings ---------- #
+    # crt.sh (Certificate Transparency): domain -> SAN siblings
     def crtsh_sans(self, domain: str) -> list[dict]:
         out = []
         data = self.http.get_json(
@@ -439,7 +431,7 @@ class Providers:
                                 "not_after": row.get("not_after")})
         return out
 
-    # ---- abuse.ch ThreatFox: is this indicator attributed? ------------------ #
+    # abuse.ch ThreatFox: is this indicator attributed?
     def threatfox(self, ioc: str) -> list[dict]:
         if not self.abusech:
             return []
@@ -452,7 +444,7 @@ class Providers:
             return []
         return data.get("data", []) or []
 
-    # ---- abuse.ch URLhaus: malware URLs seen on a host ---------------------- #
+    # abuse.ch URLhaus: malware URLs seen on a host
     def urlhaus_host(self, host: str) -> dict | None:
         if not self.abusech:
             return None
@@ -464,7 +456,7 @@ class Providers:
             return None
         return data
 
-    # ---- abuse.ch SSLBL: blacklisted certificate SHA-1s (feed, no key) ------ #
+    # abuse.ch SSLBL: blacklisted certificate SHA-1s (feed, no key)
     def sslbl_sha1_set(self) -> set[str]:
         if self._sslbl_sha1 is not None:
             return self._sslbl_sha1
@@ -479,13 +471,13 @@ class Providers:
                 self._sslbl_sha1.add(parts[1].strip().lower())
         return self._sslbl_sha1
 
-    # ---- VirusTotal: passive resolutions ------------------------------------ #
+    # VirusTotal: passive resolutions
     def vt_domain_resolutions(self, domain: str) -> list[dict]:
         if not self.vt:
             return []
         data = self.http.get_json(
             f"https://www.virustotal.com/api/v3/domains/{domain}/resolutions",
-            headers={"x-apikey": self.vt}, rate=16.0, host_key="virustotal")  # ~4/min
+            headers={"x-apikey": self.vt}, rate=16.0, host_key="virustotal") # ~4/min
         out = []
         for row in (data or {}).get("data", []):
             a = row.get("attributes", {})
@@ -506,7 +498,7 @@ class Providers:
                 out.append({"domain": a["host_name"], "date": a.get("date")})
         return out
 
-    # ---- AlienVault OTX: passive DNS ---------------------------------------- #
+    # AlienVault OTX: passive DNS
     def otx_pdns(self, kind: str, value: str) -> list[dict]:
         if not self.otx:
             return []
@@ -516,7 +508,7 @@ class Providers:
             headers={"X-OTX-API-KEY": self.otx}, rate=2.0, host_key="otx")
         return (data or {}).get("passive_dns", []) or []
 
-    # ---- Validin: historical passive DNS (Community = limited) -------------- #
+    # Validin: historical passive DNS (Community = limited)
     def validin_pdns(self, kind: str, value: str) -> list[dict]:
         if not self.validin:
             return []
@@ -530,17 +522,17 @@ class Providers:
         recs = (data or {}).get("records") or (data or {}).get("data") or []
         return recs if isinstance(recs, list) else []
 
-    # ---- Shodan InternetDB: keyless IP enrichment --------------------------- #
+    # Shodan InternetDB: keyless IP enrichment
     def internetdb(self, ip: str) -> dict | None:
         return self.http.get_json(
             f"https://internetdb.shodan.io/{ip}", rate=1.0, host_key="internetdb")
 
-    # ---- RDAP: registration + network org (no key) -------------------------- #
+    # RDAP: registration + network org (no key)
     def rdap_domain(self, domain: str) -> dict | None:
         return self.http.get_json(f"https://rdap.org/domain/{domain}",
                                   rate=1.0, host_key="rdap")
 
-    # ---- RIPEstat: ASN for an IP (no key) ----------------------------------- #
+    # RIPEstat: ASN for an IP (no key)
     def ripestat_asn(self, ip: str) -> dict | None:
         data = self.http.get_json(
             "https://stat.ripe.net/data/network-info/data.json",
@@ -550,9 +542,8 @@ class Providers:
         return {"asn": asns[0], "prefix": d.get("prefix")} if asns else None
 
 
-# --------------------------------------------------------------------------- #
-# Orchestration: breadth-first pivot from the seeds.                            #
-# --------------------------------------------------------------------------- #
+# Orchestration: breadth-first pivot from the seeds.                            
+
 class Pivoter:
     def __init__(self, providers: Providers, graph: Graph,
                  max_nodes: int = 400, freeze: set | None = None,
@@ -572,7 +563,7 @@ class Pivoter:
 
     def _in_window(self, d: str | None) -> bool:
         if d is None:
-            return True   # dateless observation: cannot judge -> keep
+            return True # dateless observation: cannot judge -> keep
         if self.since and d < self.since:
             return False
         if self.until and d > self.until:
@@ -623,7 +614,7 @@ class Pivoter:
             self.g.add_edge(node, node, "ioc_feed", "urlhaus")
 
         if frozen:
-            return out  # enrich-only: do not pivot a frozen (contaminated) node
+            return out # enrich-only: do not pivot a frozen (contaminated) node
 
         # CT logs: SAN siblings share a certificate -> STRONG, unless it is a
         # multi-tenant / shared cert with a large SAN set (that is noise).
@@ -699,7 +690,7 @@ class Pivoter:
             node.attrs["tags"] = idb.get("tags")
 
         if frozen:
-            return out  # enrich-only: do not pivot a frozen (contaminated) node
+            return out # enrich-only: do not pivot a frozen (contaminated) node
 
         # IP -> domains, from Shodan hostnames + passive DNS. Gather first, then
         # apply fan-out cap: an IP tied to many domains is shared/parked infra ->
@@ -726,23 +717,23 @@ class Pivoter:
             for d, s, w in clean:
                 dt = parse_date(w)
                 if not self._in_window(dt):
-                    continue  # observation outside the snapshot window -> drop
+                    continue # observation outside the snapshot window -> drop
                 rel = "shodan_hostname" if s == "shodan" else "pdns_coresolve"
                 dn = self.g.add_node("domain", d, source=s)
                 self.g.add_edge(node, dn, rel, s, first_seen=dt, last_seen=dt)
                 out.append(dn)
         return out
 
-    # --- small linkers ---------------------------------------------------- #
+    # small linkers
     def _link_ip(self, dom_node: Node, ip: str, source: str, when) -> list[Node]:
         try:
             addr = ipaddress.IPv4Address(ip)
         except ValueError:
             return []
-        if not addr.is_global:      # drop bogons (0.0.0.0, private, reserved, etc.)
+        if not addr.is_global: # drop bogons (0.0.0.0, private, reserved, etc.)
             return []
         dt = parse_date(when)
-        if not self._in_window(dt):  # drop observations outside the snapshot window
+        if not self._in_window(dt): # drop observations outside the snapshot window
             return []
         ipn = self.g.add_node("ipv4", ip, source=source)
         self.g.add_edge(dom_node, ipn, "pdns_coresolve", source,
@@ -778,9 +769,7 @@ def _rdap_registrar(data: dict) -> str | None:
     return None
 
 
-# --------------------------------------------------------------------------- #
-# Output                                                                        #
-# --------------------------------------------------------------------------- #
+# Output
 def write_outputs(graph: Graph, out_dir: Path, manifest: dict) -> None:
     out_dir.mkdir(parents=True, exist_ok=True)
     (out_dir / "nodes.json").write_text(
