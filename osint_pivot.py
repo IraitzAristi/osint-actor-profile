@@ -3,7 +3,7 @@
 osint_pivot.py -- Passive infrastructure pivoting for OSINT actor profiling.
 
 Project : OSINT Infrastructure Mapping (snapshot-based actor profile)
-Author  : [tu alias]
+Author  : IraitzAristi
 License : MIT
 
 WHAT IT DOES
