@@ -1,0 +1,24 @@
+# NoName057(16) / DDoSia - documented C2 & management infrastructure
+# Snapshot: C2-documentado-2022-2026
+# Sources: Team Cymru "A Blog with NoName" (2023, from SentinelLabs), ThreatFox (2026)
+# One indicator per line. Passive enrichment only; topology links live in
+# relations_teamcymru.csv (merged via --relations).
+
+# Published C2 + management stack (Team Cymru 2023)
+31.13.195.87          # published C2 (NETERRA BG), operational since 2022-12-19
+87.121.52.9           # upstream/mirror C2, TCP/5001 (NETERRA BG)
+109.107.184.11        # MongoDB 27017 data store (CLOUDASSETS RU, AS212441)
+185.173.37.220        # RabbitMQ 5672 / Redis 6379 operator bus (CLOUDASSETS RU)
+91.142.79.201         # monitoring (Prometheus Node Exporter 9100) (CLOUDASSETS RU)
+
+# No-IP DDNS C2 domains (Team Cymru 2023)
+tom56gaz6poh13f28.myftp.org
+zig35m48zur14nel40.myftp.org
+
+# Current C2 sightings (ThreatFox 2026, reporter deepfield)
+185.122.187.217
+185.76.78.136
+
+# Note: 77.91.122.69 was the *previous* C2 (active until 2022-12-16) -> put in the
+# report timeline, not here. Attack netblocks (Stark/MIRhosting /24s) -> report
+# infrastructure table, not as seeds (CIDR seeds aren't pivotable passively).

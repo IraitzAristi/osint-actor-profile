@@ -1,0 +1,16 @@
+# Analyst-curated relations for NoName057(16) / DDoSia management infrastructure.
+# Source: Team Cymru, "A Blog with NoName" (2023), building on SentinelLabs.
+# These links were documented via network telemetry (netflow), which passive
+# tooling (crt.sh / passive DNS / ASN) cannot rediscover -- so we assert them
+# explicitly, each carrying its source and confidence. Feed with:
+#   osint_pivot.py --seeds seeds.txt --relations relations_teamcymru.csv ...
+src_type,src_value,rel,dst_type,dst_value,source,weight,note
+domain,tom56gaz6poh13f28.myftp.org,resolves_to_reported,ipv4,31.13.195.87,Team Cymru 2023,strong,No-IP DDNS C2 domain (/client/get_targets over HTTP/80)
+domain,zig35m48zur14nel40.myftp.org,resolves_to_reported,ipv4,31.13.195.87,Team Cymru 2023,strong,No-IP DDNS C2 domain (/client/get_targets over HTTP/80)
+ipv4,31.13.195.87,mirror_of,ipv4,87.121.52.9,Team Cymru 2023,strong,published C2 mirrors upstream server on TCP/5001 (NETERRA BG)
+ipv4,87.121.52.9,communicates_with,ipv4,109.107.184.11,Team Cymru 2023,strong,MongoDB TCP/27017 - likely data store (CLOUDASSETS RU AS212441)
+ipv4,87.121.52.9,communicates_with,ipv4,185.173.37.220,Team Cymru 2023,strong,RabbitMQ TCP/5672 + Redis TCP/6379 - operator message bus (CLOUDASSETS RU)
+ipv4,91.142.79.201,communicates_with,ipv4,87.121.52.9,Team Cymru 2023,strong,monitoring via Node Exporter TCP/5051 + TCP/9100 (CLOUDASSETS RU)
+ipv4,91.142.79.201,communicates_with,ipv4,31.13.195.87,Team Cymru 2023,strong,monitoring TCP/9100 on published C2 (Body Hash sha1:55b1a73d64b892432cc7c5d8b73e530b62c98fbf)
+ipv4,77.91.122.69,mirror_of,ipv4,87.121.52.9,Team Cymru 2023,strong,PREVIOUS C2 (active until 2022-12-16) mirroring upstream via TCP/5001
+ipv4,87.121.52.9,communicates_with,domain,api.telegram.org,Team Cymru 2023,weak,legitimate Telegram API - bot channel (TTP T1071/T1102); NOT actor-owned infrastructure

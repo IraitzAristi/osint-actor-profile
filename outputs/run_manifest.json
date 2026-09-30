@@ -1,0 +1,35 @@
+{
+  "generated_at": "2026-09-22T23:20:17Z",
+  "snapshot_label": "C2-documented-2022-2026",
+  "depth": 2,
+  "window": {
+    "since": "2022-01-01",
+    "until": null
+  },
+  "seeds": [
+    "ipv4:31.13.195.87",
+    "ipv4:87.121.52.9",
+    "ipv4:109.107.184.11",
+    "ipv4:185.173.37.220",
+    "ipv4:91.142.79.201",
+    "domain:tom56gaz6poh13f28.myftp.org",
+    "domain:zig35m48zur14nel40.myftp.org",
+    "ipv4:185.122.187.217",
+    "ipv4:185.76.78.136"
+  ],
+  "curated_relations": 9,
+  "providers_enabled": [
+    "crt.sh",
+    "rdap",
+    "ripestat",
+    "shodan-internetdb",
+    "sslbl",
+    "threatfox",
+    "urlhaus",
+    "virustotal",
+    "otx"
+  ],
+  "node_count": 17,
+  "edge_count": 24,
+  "scope": "open-source, passive only; no interaction with actor infrastructure"
+}
