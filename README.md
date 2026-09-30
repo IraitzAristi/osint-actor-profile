@@ -50,9 +50,9 @@ osint-actor-profile/
 
 ```bash
 python -m venv .venv
-.\.venv\Scripts\Activate.ps1        # Windows PowerShell   (Linux/mac: source .venv/bin/activate)
+.\.venv\Scripts\Activate.ps1        # Windows PowerShell (Linux/mac: source .venv/bin/activate)
 pip install -r requirements.txt
-copy .env.example .env               # then fill in free-tier API keys
+copy .env.example .env              # then fill in free-tier API keys
 ```
 
 All keys are free tier and **optional** - the tool degrades gracefully and uses whatever is present. Keyless sources (crt.sh, RDAP, RIPEstat, Shodan InternetDB, abuse.ch SSLBL feeds) always work.
