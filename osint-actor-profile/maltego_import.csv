@@ -1,0 +1,10 @@
+Source,SourceType,Relationship,Target,TargetType
+tom56gaz6poh13f28.myftp.org,Domain,resolves_to_reported,31.13.195.87,IPv4Address
+zig35m48zur14nel40.myftp.org,Domain,resolves_to_reported,31.13.195.87,IPv4Address
+31.13.195.87,IPv4Address,mirror_of,87.121.52.9,IPv4Address
+77.91.122.69,IPv4Address,mirror_of,87.121.52.9,IPv4Address
+87.121.52.9,IPv4Address,communicates_with,109.107.184.11,IPv4Address
+87.121.52.9,IPv4Address,communicates_with,185.173.37.220,IPv4Address
+91.142.79.201,IPv4Address,communicates_with,87.121.52.9,IPv4Address
+91.142.79.201,IPv4Address,communicates_with,31.13.195.87,IPv4Address
+87.121.52.9,IPv4Address,communicates_with,api.telegram.org,Domain
