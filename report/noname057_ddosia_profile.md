@@ -163,7 +163,7 @@ IOCs are defanged for safe reading. Confidence is per indicator, treat "context"
 | zig35m48zur14nel40.myftp.org | Domain | DDNS C2 front (NoIP) | high |
 | 185.122.187.217 | IPv4 | 2026 C2 sighting (ThreatFox, "Dosia") | high |
 | 185.76.78.136 | IPv4 | 2026 C2 sighting (ThreatFox, "Dosia") | high |
-| 5.182.39.0/24, 94.131.109[.]0/24, 94.131.102.0/24, … | Netblocks | Attack infrastructure (Stark/MIRhosting), see full table | high |
+| 5.182.39.0/24, 94.131.109.0/24, 94.131.102.0/24, … | Netblocks | Attack infrastructure (Stark/MIRhosting), see full table | high |
 | api.telegram.org | Domain | Legitimate Telegram API (bot channel), do NOT block | context |
 
 > Machine readable bundles (STIX 2.1 and MISP) and the passive pivoting tool are available in the project repository: [osint-actor-profile](https://github.com/IraitzAristi/osint-actor-profile).
