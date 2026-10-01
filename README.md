@@ -34,13 +34,13 @@ The pipeline takes published seed indicators, pivots them through free-tier pass
 
 ```
 osint-actor-profile/
-├── osint_pivot.py            # collection + pivoting + filtering + confidence
+├── osint_pivot.py # collection + pivoting + filtering + confidence
 ├── build_report_artifacts.py # graph.html / graph.dot / STIX / MISP from the graph
-├── seeds.txt                 # seed indicators (documented C2 + 2026 sightings)
-├── relations_teamcymru.csv   # analyst-curated topology (source + confidence per edge)
+├── seeds.txt # seed indicators (documented C2 + 2026 sightings)
+├── relations_teamcymru.csv # analyst-curated topology (source + confidence per edge)
 ├── attack_infrastructure.csv # attack ASNs/netblocks (report table, not pivotable)
-├── report/                   # the written intelligence product
-├── outputs/                  # generated artifacts (committed as an example run)
+├── report/ # the written intelligence product
+├── outputs/ # generated artifacts (committed as an example run)
 ├── requirements.txt
 ├── .env.example
 └── .gitignore
@@ -50,9 +50,9 @@ osint-actor-profile/
 
 ```bash
 python -m venv .venv
-.\.venv\Scripts\Activate.ps1        # Windows PowerShell (Linux/mac: source .venv/bin/activate)
+.\.venv\Scripts\Activate.ps1 # Windows PowerShell (Linux/mac: source .venv/bin/activate)
 pip install -r requirements.txt
-copy .env.example .env              # then fill in free-tier API keys
+copy .env.example .env # then fill in free-tier API keys
 ```
 
 All keys are free tier and **optional**, the tool degrades gracefully and uses whatever is present. Keyless sources (crt.sh, RDAP, RIPEstat, Shodan InternetDB, abuse.ch SSLBL feeds) always work.
@@ -99,3 +99,13 @@ Team Cymru, *A Blog with NoName* (2023), Europol/Eurojust, Operation Eastwood (2
 ---
 
 *Analysis based solely on open-source reporting. No interaction with the actor or its live infrastructure. `TLP:CLEAR`.*
+
+## License
+
+Code (the passive-pivoting tool, scripts and artifacts) is released under the
+[MIT License](LICENSE).
+
+The analysis report and written documentation (`report/`, `docs/`) are
+© 2026 Iraitz Aristi Lucambio and licensed under
+[Creative Commons Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/):
+you may share and adapt them with attribution.
