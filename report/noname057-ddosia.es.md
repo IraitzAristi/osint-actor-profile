@@ -49,7 +49,7 @@ En el momento del corte de datos no existía una entrada de grupo dedicada en AT
 | Resource Development | Acquire Infrastructure: Server | T1583.004 | Servidores de control y gestión en VPS de NETERRA (BG) y CLOUDASSETS (RU), capacidad de ataque en VPS de Stark/MIRhosting (Team Cymru). |
 | Resource Development | Acquire Infrastructure: Dynamic DNS | T1583.001 | Dominios de DNS dinámico de NoIP (`*.myftp.org`) usados como fachada de C2 para la distribución de objetivos (Team Cymru). |
 | Command and Control | Application Layer Protocol: Web | T1071.001 | El cliente DDoSia recupera listas de objetivos desde `/client/get_targets` por HTTP/80 (Team Cymru). |
-| Command and Control | Web Service: Bidirectional | T1102.002 | Canales y bot de Telegram (`@noname05716`, `@nn05716chat`) para tareas, reclutamiento y pagos, tráfico del lado servidor hacia `api.telegram[.]org` (Team Cymru). |
+| Command and Control | Web Service: Bidirectional | T1102.002 | Canales y bot de Telegram (`@noname05716`, `@nn05716chat`) para tareas, reclutamiento y pagos, tráfico del lado servidor hacia `api.telegram.org` (Team Cymru). |
 | Impact | Network Denial of Service | T1498 | DDoS volumétrico sostenido contra servicios web de las víctimas (varios vendors, Europol). |
 | Impact | Endpoint Denial of Service | T1499 | Inundaciones de capa de aplicación (HTTP/TCP) dirigidas a hosts y subdominios concretos según las tareas del C2 (Team Cymru). |
 
