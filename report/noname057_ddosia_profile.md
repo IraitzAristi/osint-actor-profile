@@ -22,7 +22,7 @@ NoName057(16) is a pro Russia hacktivist operation that has run sustained distri
 - **The operation is very likely operator run rather than genuinely crowd driven at the infrastructure layer.** A large majority of attack traffic has originated from a handful of netblocks at two interlinked providers (Stark Industries, MIRhosting), which is inconsistent with a broad, organically distributed volunteer base. *(confidence: moderate)*
 - **The group is resilient to law enforcement disruption.** Despite Operation Eastwood (July 2025), fresh C2 indicators attributed to DDoSia appear in public feeds in 2026, indicating reconstitution rather than dismantlement. *(confidence: high)*
 - **The concentration of attack infrastructure is a genuine defensive opportunity.** Because so much traffic originates from a limited, identifiable set of /24s, targeted blocking materially reduces attack impact. *(confidence: moderate)*
-- **Automated passive pivoting did not reveal confirmed new actor infrastructure beyond what is already documented.** The reconstruction rests on published reporting, the single candidate the pipeline surfaced (`flotaero[.]info`) was rejected on temporal grounds (see Pivot rationale). *(confidence: high, as a statement about this collection)*
+- **Automated passive pivoting did not reveal confirmed new actor infrastructure beyond what is already documented.** The reconstruction rests on published reporting, the single candidate the pipeline surfaced (`flotaero.info`) was rejected on temporal grounds (see Pivot rationale). *(confidence: high, as a statement about this collection)*
 
 ## Attribution & origin
 
