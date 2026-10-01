@@ -49,7 +49,7 @@ No dedicated ATT&CK group entry existed for NoName057(16) as of the data cutoff,
 | Resource Development | Acquire Infrastructure: Server | T1583.004 | Control/management servers on VPS at NETERRA (BG) and CLOUDASSETS (RU), attack capacity on Stark/MIRhosting VPS (Team Cymru). |
 | Resource Development | Acquire Infrastructure: Dynamic DNS | T1583.001 | NoIP dynamic DNS domains (`*.myftp.org`) used as C2 front for target distribution (Team Cymru). |
 | Command and Control | Application Layer Protocol: Web | T1071.001 | DDoSia client fetches target lists from `/client/get_targets` over HTTP/80 (Team Cymru). |
-| Command and Control | Web Service: Bidirectional | T1102.002 | Telegram channels/bot (`@noname05716`, `@nn05716chat`) for tasking, recruitment and payments, server side traffic to `api.telegram[.]org` (Team Cymru). |
+| Command and Control | Web Service: Bidirectional | T1102.002 | Telegram channels/bot (`@noname05716`, `@nn05716chat`) for tasking, recruitment and payments, server side traffic to `api.telegram.org` (Team Cymru). |
 | Impact | Network Denial of Service | T1498 | Sustained volumetric DDoS against victim web services (multiple vendors, Europol). |
 | Impact | Endpoint Denial of Service | T1499 | Application layer floods (HTTP/TCP) targeting specific hosts/subdomains per C2 tasking (Team Cymru). |
 
