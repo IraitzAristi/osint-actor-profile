@@ -3,7 +3,7 @@
 # These links were documented via network telemetry (netflow), which passive
 # tooling (crt.sh / passive DNS / ASN) cannot rediscover -- so we assert them
 # explicitly, each carrying its source and confidence. Feed with:
-#   osint_pivot.py --seeds seeds.txt --relations relations_teamcymru.csv ...
+# osint_pivot.py --seeds seeds.txt --relations relations_teamcymru.csv ...
 src_type,src_value,rel,dst_type,dst_value,source,weight,note
 domain,tom56gaz6poh13f28.myftp.org,resolves_to_reported,ipv4,31.13.195.87,Team Cymru 2023,strong,No-IP DDNS C2 domain (/client/get_targets over HTTP/80)
 domain,zig35m48zur14nel40.myftp.org,resolves_to_reported,ipv4,31.13.195.87,Team Cymru 2023,strong,No-IP DDNS C2 domain (/client/get_targets over HTTP/80)
