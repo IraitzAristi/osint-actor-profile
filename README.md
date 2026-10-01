@@ -99,3 +99,13 @@ Team Cymru, *A Blog with NoName* (2023), Europol/Eurojust, Operation Eastwood (2
 ---
 
 *Analysis based solely on open-source reporting. No interaction with the actor or its live infrastructure. `TLP:CLEAR`.*
+
+## License
+
+Code (the passive-pivoting tool, scripts and artifacts) is released under the
+[MIT License](LICENSE).
+
+The analysis report and written documentation (`report/`, `docs/`) are
+© 2026 Iraitz Aristi Lucambio and licensed under
+[Creative Commons Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/):
+you may share and adapt them with attribution.
