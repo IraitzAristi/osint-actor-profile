@@ -1,0 +1,18 @@
+# secrets — NEVER commit
+.env
+
+# regenerable cache of third-party API responses
+.cache/
+
+# python
+.venv/
+__pycache__/
+*.pyc
+
+# OS noise
+.DS_Store
+Thumbs.db
+
+# Note: outputs/ is intentionally committed as an example run.
+# If you prefer not to ship it, uncomment:
+# outputs/
