@@ -1,111 +1,79 @@
-# OSINT ACTOR PROFILE
-## Snapshot Based OSINT Infrastructure Reconstruction
+[English](README.md) · **Castellano**
 
-Passive, open-source reconstruction of a rotating-C2 threat actor's known infrastructure, built as an intelligence-analysis exercise, not an investigation. **Case study: NoName057(16) / DDoSia.**
+# OSINT Infrastructure Mapping · NoName057(16) / DDoSia
 
-The pipeline takes published seed indicators, pivots them through free-tier passive sources, merges analyst-curated (report-sourced) relationships, scores every link by confidence, aggressively filters shared/benign infrastructure, and exports an interactive graph plus **STIX 2.1** and **MISP** bundles.
+> **TLP:CLEAR** · Reconstrucción de infraestructura y perfil de actor a partir de **fuentes abiertas** y **consulta pasiva**. Sin interacción con el actor ni con infraestructura viva.
 
-> **The point of this project is not a big graph.** It is *disciplined* pivoting: automated validation and de-duplication of a documented topology, with transparent, reproducible rejection of noise. On this actor the honest result is **zero newly-confirmed infrastructure** beyond what vendors already published, and the repo shows exactly what was filtered and why. What the pipeline *rejects* is as important as what it keeps.
+Herramienta de pivoting pasivo y perfil de inteligencia de amenazas del grupo hacktivista prorruso **NoName057(16)** (proyecto **DDoSia**). Reconstruye la topología de C2, gestión y ataque **documentada públicamente**, correlacionando indicadores ya publicados por vendors y fuerzas del orden, y la enriquece con consultas pasivas. El valor no es descubrir infraestructura viva, es **validar, deduplicar y razonar** sobre lo documentado, y rechazar el ruido de forma transparente.
 
-**Scope:** open sources + passive queries only. Every lookup hits a third-party cache/scanner/database (Certificate Transparency, passive DNS, RDAP/WHOIS, RIPEstat, Shodan InternetDB). The tooling never resolves the actor's names, scans its hosts, or contacts its infrastructure. `TLP:CLEAR`.
+**Informe completo:** [`report/noname057_ddosia_profile.md`](report/noname057_ddosia_profile.md) (ES: [`report/noname057-ddosia.es.md`](report/noname057-ddosia.es.md))
+**Portfolio:** https://iraitzaristi.github.io
 
----
+## Metodología
 
-## Why it's interesting
+- **Solo fuentes abiertas y consulta pasiva.** Cada dato procede de cachés, escáneres o bases de datos de terceros: Certificate Transparency (crt.sh), DNS pasivo (VirusTotal, AlienVault OTX), RDAP/WHOIS, RIPEstat (ASN/BGP), Shodan InternetDB y feeds de abuse.ch (ThreatFox, URLhaus), más reporting publicado.
+- **Cero interacción.** En ningún momento se resuelven los nombres del actor, se escanean sus hosts ni se contacta con su infraestructura. Es una frontera metodológica deliberada, no una limitación.
+- **Actor documentado.** Las semillas son indicadores ya publicados (Team Cymru sobre la base de SentinelLabs, y avistamientos de 2026 de ThreatFox). La topología de gestión derivada de telemetría de red, que una herramienta pasiva no puede redescubrir, se afirma como relaciones curadas por el analista, cada una con su fuente y su nivel de confianza.
+- **Instantánea, no vista en vivo.** El C2 operativo rota en escala de días, así que el análisis se fija a una instantánea documentada del periodo 2022 a 2026.
 
-- **Confidence is per-relationship, not per-graph.** Cert reuse / SAN siblings / public-feed hits = *strong*, passive-DNS co-resolution = *moderate*, shared ASN = *weak / context only*. A node is only "confirmed" with ≥1 strong or ≥2 independent moderate edges.
-- **Noise control is in code, not prose.** Fan-out caps (an IP tied to many domains, or a cert with many SANs = shared/parked), parking/CDN ranges, provider reverse-DNS, bogons, and a **snapshot time-window** are all enforced by the pivoter and visible in the outputs.
-- **Analyst-curated intelligence is merged with provenance.** Telemetry-based links a passive tool can't rediscover (e.g. Team Cymru's netflow topology) are asserted from a CSV, each edge carrying its source and confidence.
-- **A worked "negative space" example.** The one candidate the automated pivot surfaced (`flotaero[.]info`) is rejected on temporal grounds - its passive-DNS record predates the actor - and dropped automatically by the snapshot window.
-
-## What it produces
-
-| File | What |
-| --- | --- |
-| `outputs/graph.html` | Interactive relationship graph (domain -> IP -> service -> ASN), colour-coded by status/confidence |
-| `outputs/graph.dot` | Same graph in Graphviz (`dot -Tpng graph.dot -o graph.png`) |
-| `outputs/iocs.stix.json` | STIX 2.1 bundle (SCOs, indicators, infrastructure, intrusion-set, relationships) |
-| `outputs/iocs.misp.json` | MISP event (attributes with `to_ids`, TLP tag) |
-| `outputs/nodes.* / edges.*` | Normalized graph as JSON and CSV |
-| `outputs/run_manifest.json` | Run metadata: seeds, window, providers, counts, scope statement |
-| `report/noname057_ddosia_profile.md` | Full threat-actor profile (executive summary, key judgments, attribution, ATT&CK, infrastructure, timeline, assessment, defensive recommendations, graded sources) |
-
-## Repository layout
+## Estructura del repositorio
 
 ```
-osint-actor-profile/
-├── osint_pivot.py # collection + pivoting + filtering + confidence
-├── build_report_artifacts.py # graph.html / graph.dot / STIX / MISP from the graph
-├── seeds.txt # seed indicators (documented C2 + 2026 sightings)
-├── relations_teamcymru.csv # analyst-curated topology (source + confidence per edge)
-├── attack_infrastructure.csv # attack ASNs/netblocks (report table, not pivotable)
-├── report/ # the written intelligence product
-├── outputs/ # generated artifacts (committed as an example run)
-├── requirements.txt
-├── .env.example
-└── .gitignore
+.
+├── osint_pivot.py              # herramienta de pivoting pasivo
+├── build_report_artifacts.py   # genera grafos y bundles a partir de las salidas
+├── seeds.txt                   # semillas (IOCs documentados)
+├── relations_teamcymru.csv     # relaciones curadas por el analista (de reporting)
+├── outputs/                    # ejemplo de ejecución (nodos, aristas, grafo, STIX, MISP)
+├── report/
+│   ├── noname057_ddosia_profile.md   # informe (EN)
+│   ├── noname057-ddosia.es.md        # informe (ES)
+│   ├── figures/                      # topología (graphviz, drawio, maltego)
+│   └── screenshots/                  # evidencias del proceso
+├── docs/                       # MALTEGO.md, narrativa del proceso
+├── .env.example                # plantilla de claves (todas opcionales)
+└── LICENSE
 ```
 
-## Setup
+## Instalación y uso
+
+Requiere Python 3. Dependencias mínimas (`requests`, y `python-dotenv` opcional):
 
 ```bash
-python -m venv .venv
-.\.venv\Scripts\Activate.ps1 # Windows PowerShell (Linux/mac: source .venv/bin/activate)
 pip install -r requirements.txt
-copy .env.example .env # then fill in free-tier API keys
 ```
 
-All keys are free tier and **optional**, the tool degrades gracefully and uses whatever is present. Keyless sources (crt.sh, RDAP, RIPEstat, Shodan InternetDB, abuse.ch SSLBL feeds) always work.
+Las **claves de API son opcionales**: la herramienta funciona con las fuentes sin clave (crt.sh, RDAP, RIPEstat, Shodan InternetDB, feeds SSLBL) y usa las que haya configuradas. Para añadir VirusTotal o abuse.ch, copia `.env.example` a `.env` y rellena lo que tengas.
 
-| Env var | Provider | Where |
-| --- | --- | --- |
-| `ABUSECH_AUTH_KEY` | ThreatFox + URLhaus | https://auth.abuse.ch |
-| `VT_API_KEY` | VirusTotal (public) | account -> API key |
-| `OTX_API_KEY` | AlienVault OTX | Settings -> API Integration |
-| `VALIDIN_API_KEY` | Validin Community (optional) | account -> Manage API keys |
-
-## Reproduce the example run
+Ejecución típica:
 
 ```bash
-python osint_pivot.py --seeds seeds.txt --relations relations_teamcymru.csv --freeze 31.13.195.87 --since 2022-01-01 --depth 2 --snapshot "C2-documented-2022-2026" --out ./outputs
-
-python build_report_artifacts.py --in ./outputs --out ./outputs --actor "NoName057(16)" --aliases DDoSia Dosia --snapshot "C2-documented-2022-2026" --producer "Iraitz Aristi"
+python osint_pivot.py --seeds seeds.txt --depth 2 \
+    --snapshot "pre-Eastwood-2025-07" --out ./outputs
 ```
 
-- `--freeze 31.13.195.87` — enrich the publicly-outed C2 but don't pivot its polluted passive DNS.
-- `--since 2022-01-01` — snapshot window, drops passive-DNS records predating the actor (this is what removes the `flotaero[.]info` previous-tenant branch).
+O con semillas sueltas:
 
-**Expected result:** a small, clean graph (17 nodes / 24 edges), **0 newly-confirmed** actor nodes, the documented topology intact and all shared/benign infrastructure demoted to *context*. Exact counts are written to `outputs/run_manifest.json`. Responses are cached under `.cache/` (git-ignored, regenerable), so re-runs are fast.
+```bash
+python osint_pivot.py --seed-domain example.tld --seed-ip 203.0.113.10 --depth 1
+```
 
+## Salidas
 
-## Methodology (summary)
+En `outputs/`: nodos y aristas (`nodes.csv/json`, `edges.csv/json`), el grafo (`graph.dot`, `graph.html`), los IOCs en formato legible por máquina (**STIX 2.1** en `iocs.stix.json`, **MISP** en `iocs.misp.json`) y un `run_manifest.json` con la traza de la ejecución. Las figuras de topología están en `report/figures/`.
 
-1. **Seeds** from published reporting (Team Cymru 2023, via SentinelLabs) and public feeds (abuse.ch ThreatFox, 2026).
-2. **Curated relations** for the netflow-documented management topology, merged with per-edge source/confidence.
-3. **Passive pivoting** via crt.sh (CT), VirusTotal/OTX passive DNS, RIPEstat (ASN), Shodan InternetDB, with fan-out caps, parking/CDN/bogon filters, provider-rDNS filter, node freezing, and the snapshot window.
-4. **Confidence resolution** promotes/demotes nodes from edge evidence, shared/parked/bogon infrastructure is never promoted.
-5. **Export** to an interactive graph and interchange formats (STIX 2.1 / MISP).
+## Desarrollo y autoría
 
-The written product maps the actor's tradecraft to MITRE ATT&CK, uses estimative language with explicit confidence, and grades sources on the Admiralty scale.
+La herramienta de pivoting (`osint_pivot.py`) se **desarrolló con ayuda de IA** como asistente de programación. El código fue después **revisado, corregido, mejorado y simplificado por mí**: ajusté la lógica de pivoting y de enriquecimiento, las exclusiones (rangos de parking/CDN, hosts con alto fan out, PTR de proveedores, direcciones bogon), el filtrado temporal por ventana de instantánea y el formato de salida. Entiendo y respondo por cada parte del código.
 
-## Limitations
+El **análisis del informe**, las **decisiones metodológicas** (qué pivotar, qué congelar, qué rechazar y por qué, como el candidato `flotaero.info` descartado por fecha) y las **valoraciones con nivel de confianza** son íntegramente míos.
 
-Passive and snapshot-bound: DDoSia's C2 rotates on a scale of days, so this is a documented reconstruction, not a live map. Historically documented IPs may since be reassigned, sinkholed, or under law-enforcement control. Public feeds decay (e.g. ThreatFox's ~6-month window), so historical coverage relies on dated vendor reporting.
+## Licencia
 
-## Key sources
+El código (la herramienta, los scripts y los artefactos) se publica bajo la [Licencia MIT](LICENSE).
 
-Team Cymru, *A Blog with NoName* (2023), Europol/Eurojust, Operation Eastwood (2025), abuse.ch ThreatFox, Sekoia TDR, Recorded Future / Insikt, Censys. Full graded list in the report.
+El informe de análisis y la documentación escrita (`report/`, `docs/`) son © 2026 Iraitz Aristi Lucambio y se publican bajo [Creative Commons Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/): puedes compartirlos y adaptarlos citando la autoría.
 
----
+## Aviso
 
-*Analysis based solely on open-source reporting. No interaction with the actor or its live infrastructure. `TLP:CLEAR`.*
-
-## License
-
-Code (the passive-pivoting tool, scripts and artifacts) is released under the
-[MIT License](LICENSE).
-
-The analysis report and written documentation (`report/`, `docs/`) are
-© 2026 Iraitz Aristi Lucambio and licensed under
-[Creative Commons Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/):
-you may share and adapt them with attribution.
+Trabajo de inteligencia **defensiva** basado únicamente en fuentes abiertas, con fines de investigación y detección. Sin interacción con el actor ni con su infraestructura viva. Los indicadores se publican defangeados. **TLP:CLEAR.**
