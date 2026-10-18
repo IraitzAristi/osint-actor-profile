@@ -3,6 +3,8 @@
 > **TLP:CLEAR** · **Report date:** 2026-09-24 · **Analyst:** Iraitz Aristi · **Version:** 1.0
 > **Data cutoff (snapshot):** 2026-09-20 · **Collection window:** documented C2 & management infrastructure, 2022 to 2026
 
+> **Process document (PDF, in Spanish):** [how this report was built, step by step](https://github.com/IraitzAristi/osint-actor-profile/blob/main/docs/proceso_v1.pdf)
+
 **Aliases:** DDoSia, Dosia (ThreatFox family label) · **First seen:** March 2022 · **Origin / attribution:** pro Russia hacktivist collective, management infrastructure hosted in Russia · **Motivation:** hacktivism (pro Russia ideological / geopolitical)
 
 <!-- Profile reconstructed ENTIRELY from open source reporting and passive queries.

@@ -1,117 +1,83 @@
 [Castellano](README.md) · **English**
 
-> **Translated version.** Translated from the Spanish original: [read it in Spanish](README.md).
+> **Translated version.** This README was translated from the Spanish original, which is the reference version: [read it in Spanish](README.md).
 
-# OSINT ACTOR PROFILE
-## Snapshot Based OSINT Infrastructure Reconstruction
+# OSINT Infrastructure Mapping · NoName057(16) / DDoSia
 
-Passive, open-source reconstruction of a rotating-C2 threat actor's known infrastructure, built as an intelligence-analysis exercise, not an investigation. **Case study: NoName057(16) / DDoSia.**
+> **TLP:CLEAR** · Infrastructure reconstruction and actor profile built from **open sources** and **passive lookups**. No interaction with the actor or with live infrastructure.
 
-> **Process document (PDF, in Spanish):** [`docs/proceso_v1.pdf`](docs/proceso_v1.pdf) · how the report was built, step by step.
+Passive pivoting tool and threat intelligence profile of the pro-Russian hacktivist group **NoName057(16)** (the **DDoSia** project). It reconstructs the **publicly documented** C2, management and attack topology by correlating indicators already published by vendors and law enforcement, and enriches it with passive lookups. The value is not discovering live infrastructure, but **validating, deduplicating and reasoning** about what has been documented, and rejecting noise transparently.
 
-The pipeline takes published seed indicators, pivots them through free-tier passive sources, merges analyst-curated (report-sourced) relationships, scores every link by confidence, aggressively filters shared/benign infrastructure, and exports an interactive graph plus **STIX 2.1** and **MISP** bundles.
+> **Process document (PDF, in Spanish):** [`docs/proceso_v1.pdf`](docs/proceso_v1.pdf) · how I built the report, step by step.
 
-> **The point of this project is not a big graph.** It is *disciplined* pivoting: automated validation and de-duplication of a documented topology, with transparent, reproducible rejection of noise. On this actor the honest result is **zero newly-confirmed infrastructure** beyond what vendors already published, and the repo shows exactly what was filtered and why. What the pipeline *rejects* is as important as what it keeps.
+**Full report:** [`report/noname057_ddosia_profile.md`](report/noname057_ddosia_profile.md) (ES: [`report/noname057-ddosia.es.md`](report/noname057-ddosia.es.md))
+**Portfolio:** https://iraitzaristi.github.io
 
-**Scope:** open sources + passive queries only. Every lookup hits a third-party cache/scanner/database (Certificate Transparency, passive DNS, RDAP/WHOIS, RIPEstat, Shodan InternetDB). The tooling never resolves the actor's names, scans its hosts, or contacts its infrastructure. `TLP:CLEAR`.
+## Methodology
 
----
-
-## Why it's interesting
-
-- **Confidence is per-relationship, not per-graph.** Cert reuse / SAN siblings / public-feed hits = *strong*, passive-DNS co-resolution = *moderate*, shared ASN = *weak / context only*. A node is only "confirmed" with ≥1 strong or ≥2 independent moderate edges.
-- **Noise control is in code, not prose.** Fan-out caps (an IP tied to many domains, or a cert with many SANs = shared/parked), parking/CDN ranges, provider reverse-DNS, bogons, and a **snapshot time-window** are all enforced by the pivoter and visible in the outputs.
-- **Analyst-curated intelligence is merged with provenance.** Telemetry-based links a passive tool can't rediscover (e.g. Team Cymru's netflow topology) are asserted from a CSV, each edge carrying its source and confidence.
-- **A worked "negative space" example.** The one candidate the automated pivot surfaced (`flotaero[.]info`) is rejected on temporal grounds - its passive-DNS record predates the actor - and dropped automatically by the snapshot window.
-
-## What it produces
-
-| File | What |
-| --- | --- |
-| `outputs/graph.html` | Interactive relationship graph (domain -> IP -> service -> ASN), colour-coded by status/confidence |
-| `outputs/graph.dot` | Same graph in Graphviz (`dot -Tpng graph.dot -o graph.png`) |
-| `outputs/iocs.stix.json` | STIX 2.1 bundle (SCOs, indicators, infrastructure, intrusion-set, relationships) |
-| `outputs/iocs.misp.json` | MISP event (attributes with `to_ids`, TLP tag) |
-| `outputs/nodes.* / edges.*` | Normalized graph as JSON and CSV |
-| `outputs/run_manifest.json` | Run metadata: seeds, window, providers, counts, scope statement |
-| `report/noname057_ddosia_profile.md` | Full threat-actor profile (executive summary, key judgments, attribution, ATT&CK, infrastructure, timeline, assessment, defensive recommendations, graded sources) |
+- **Open sources and passive lookups only.** Every data point comes from third-party caches, scanners or databases: Certificate Transparency (crt.sh), passive DNS (VirusTotal, AlienVault OTX), RDAP/WHOIS, RIPEstat (ASN/BGP), Shodan InternetDB and abuse.ch feeds (ThreatFox, URLhaus), plus published reporting.
+- **Zero interaction.** At no point are the actor's names resolved, its hosts scanned or its infrastructure contacted. This is a deliberate methodological boundary, not a limitation.
+- **Documented actor.** The seeds are already published indicators (Team Cymru, building on SentinelLabs, and 2026 ThreatFox sightings). The management topology derived from network telemetry, which a passive tool cannot rediscover, is stated as analyst-curated relations, each with its source and confidence level.
+- **Snapshot, not a live view.** The operational C2 rotates on a scale of days, so the analysis is pinned to a documented snapshot of the 2022 to 2026 period.
 
 ## Repository layout
 
 ```
-osint-actor-profile/
-├── osint_pivot.py # collection + pivoting + filtering + confidence
-├── build_report_artifacts.py # graph.html / graph.dot / STIX / MISP from the graph
-├── seeds.txt # seed indicators (documented C2 + 2026 sightings)
-├── relations_teamcymru.csv # analyst-curated topology (source + confidence per edge)
-├── attack_infrastructure.csv # attack ASNs/netblocks (report table, not pivotable)
-├── report/ # the written intelligence product
-├── outputs/ # generated artifacts (committed as an example run)
-├── requirements.txt
-├── .env.example
-└── .gitignore
+.
+├── osint_pivot.py              # passive pivoting tool
+├── build_report_artifacts.py   # builds graphs and bundles from the outputs
+├── seeds.txt                   # seeds (documented IOCs)
+├── relations_teamcymru.csv     # analyst-curated relations (from reporting)
+├── outputs/                    # example run (nodes, edges, graph, STIX, MISP)
+├── report/
+│   ├── noname057_ddosia_profile.md   # report (EN)
+│   ├── noname057-ddosia.es.md        # report (ES)
+│   ├── figures/                      # topology (graphviz, drawio, maltego)
+│   └── screenshots/                  # process evidence
+├── docs/                       # MALTEGO.md, process narrative
+├── .env.example                # key template (all optional)
+└── LICENSE
 ```
 
-## Setup
+## Setup and usage
+
+Requires Python 3. Minimal dependencies (`requests`, and optionally `python-dotenv`):
 
 ```bash
-python -m venv .venv
-.\.venv\Scripts\Activate.ps1 # Windows PowerShell (Linux/mac: source .venv/bin/activate)
 pip install -r requirements.txt
-copy .env.example .env # then fill in free-tier API keys
 ```
 
-All keys are free tier and **optional**, the tool degrades gracefully and uses whatever is present. Keyless sources (crt.sh, RDAP, RIPEstat, Shodan InternetDB, abuse.ch SSLBL feeds) always work.
+**API keys are optional**: the tool works with the keyless sources (crt.sh, RDAP, RIPEstat, Shodan InternetDB, SSLBL feeds) and uses whichever keys are configured. To add VirusTotal or abuse.ch, copy `.env.example` to `.env` and fill in what you have.
 
-| Env var | Provider | Where |
-| --- | --- | --- |
-| `ABUSECH_AUTH_KEY` | ThreatFox + URLhaus | https://auth.abuse.ch |
-| `VT_API_KEY` | VirusTotal (public) | account -> API key |
-| `OTX_API_KEY` | AlienVault OTX | Settings -> API Integration |
-| `VALIDIN_API_KEY` | Validin Community (optional) | account -> Manage API keys |
-
-## Reproduce the example run
+Typical run:
 
 ```bash
-python osint_pivot.py --seeds seeds.txt --relations relations_teamcymru.csv --freeze 31.13.195.87 --since 2022-01-01 --depth 2 --snapshot "C2-documented-2022-2026" --out ./outputs
-
-python build_report_artifacts.py --in ./outputs --out ./outputs --actor "NoName057(16)" --aliases DDoSia Dosia --snapshot "C2-documented-2022-2026" --producer "Iraitz Aristi"
+python osint_pivot.py --seeds seeds.txt --depth 2 \
+    --snapshot "pre-Eastwood-2025-07" --out ./outputs
 ```
 
-- `--freeze 31.13.195.87` — enrich the publicly-outed C2 but don't pivot its polluted passive DNS.
-- `--since 2022-01-01` — snapshot window, drops passive-DNS records predating the actor (this is what removes the `flotaero[.]info` previous-tenant branch).
+Or with individual seeds:
 
-**Expected result:** a small, clean graph (17 nodes / 24 edges), **0 newly-confirmed** actor nodes, the documented topology intact and all shared/benign infrastructure demoted to *context*. Exact counts are written to `outputs/run_manifest.json`. Responses are cached under `.cache/` (git-ignored, regenerable), so re-runs are fast.
+```bash
+python osint_pivot.py --seed-domain example.tld --seed-ip 203.0.113.10 --depth 1
+```
 
+## Outputs
 
-## Methodology (summary)
+In `outputs/`: nodes and edges (`nodes.csv/json`, `edges.csv/json`), the graph (`graph.dot`, `graph.html`), the IOCs in machine-readable formats (**STIX 2.1** in `iocs.stix.json`, **MISP** in `iocs.misp.json`) and a `run_manifest.json` with the run trace. The topology figures are in `report/figures/`.
 
-1. **Seeds** from published reporting (Team Cymru 2023, via SentinelLabs) and public feeds (abuse.ch ThreatFox, 2026).
-2. **Curated relations** for the netflow-documented management topology, merged with per-edge source/confidence.
-3. **Passive pivoting** via crt.sh (CT), VirusTotal/OTX passive DNS, RIPEstat (ASN), Shodan InternetDB, with fan-out caps, parking/CDN/bogon filters, provider-rDNS filter, node freezing, and the snapshot window.
-4. **Confidence resolution** promotes/demotes nodes from edge evidence, shared/parked/bogon infrastructure is never promoted.
-5. **Export** to an interactive graph and interchange formats (STIX 2.1 / MISP).
+## Development and authorship
 
-The written product maps the actor's tradecraft to MITRE ATT&CK, uses estimative language with explicit confidence, and grades sources on the Admiralty scale.
+The pivoting tool (`osint_pivot.py`) was **developed with AI assistance** as a programming aid. The code was then **reviewed, fixed, improved and simplified by me**: I adjusted the pivoting and enrichment logic, the exclusions (parking/CDN ranges, high fan-out hosts, provider PTRs, bogon addresses), the time filtering by snapshot window and the output format. I understand and stand behind every part of the code.
 
-## Limitations
-
-Passive and snapshot-bound: DDoSia's C2 rotates on a scale of days, so this is a documented reconstruction, not a live map. Historically documented IPs may since be reassigned, sinkholed, or under law-enforcement control. Public feeds decay (e.g. ThreatFox's ~6-month window), so historical coverage relies on dated vendor reporting.
-
-## Key sources
-
-Team Cymru, *A Blog with NoName* (2023), Europol/Eurojust, Operation Eastwood (2025), abuse.ch ThreatFox, Sekoia TDR, Recorded Future / Insikt, Censys. Full graded list in the report.
-
----
-
-*Analysis based solely on open-source reporting. No interaction with the actor or its live infrastructure. `TLP:CLEAR`.*
+The **report analysis**, the **methodological decisions** (what to pivot, what to freeze, what to reject and why, such as the `flotaero.info` candidate discarded by date) and the **confidence-rated assessments** are entirely my own.
 
 ## License
 
-Code (the passive-pivoting tool, scripts and artifacts) is released under the
-[MIT License](LICENSE).
+The code (the tool, the scripts and the artifacts) is released under the [MIT License](LICENSE).
 
-The analysis report and written documentation (`report/`, `docs/`) are
-© 2026 Iraitz Aristi Lucambio and licensed under
-[Creative Commons Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/):
-you may share and adapt them with attribution.
+The analysis report and the written documentation (`report/`, `docs/`) are © 2026 Iraitz Aristi Lucambio and are released under [Creative Commons Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/): you may share and adapt them as long as you credit the author.
+
+## Disclaimer
+
+**Defensive** intelligence work based solely on open sources, for research and detection purposes. No interaction with the actor or its live infrastructure. Indicators are published defanged. **TLP:CLEAR.**
