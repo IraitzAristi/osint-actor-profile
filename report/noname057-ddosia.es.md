@@ -3,6 +3,8 @@
 > **TLP:CLEAR** · **Fecha del informe:** 2026-09-24 · **Analista:** Iraitz Aristi · **Versión:** 1.0
 > **Corte de datos (instantánea):** 2026-09-20 · **Ventana de recolección:** infraestructura de C2 y gestión documentada, 2022 a 2026
 
+> **Documento de proceso (PDF):** [cómo construí este informe, paso a paso](https://github.com/IraitzAristi/osint-actor-profile/blob/main/docs/proceso_v1.pdf)
+
 **Alias:** DDoSia, Dosia (etiqueta de familia en ThreatFox) · **Primera aparición:** marzo de 2022 · **Origen / atribución:** colectivo hacktivista prorruso, infraestructura de gestión alojada en Rusia · **Motivación:** hacktivismo (ideológico / geopolítico prorruso)
 
 <!-- Perfil reconstruido ENTERAMENTE a partir de reporting de fuentes abiertas y consultas pasivas.
