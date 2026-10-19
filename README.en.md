@@ -49,11 +49,12 @@ pip install -r requirements.txt
 
 **API keys are optional**: the tool works with the keyless sources (crt.sh, RDAP, RIPEstat, Shodan InternetDB, SSLBL feeds) and uses whichever keys are configured. To add VirusTotal or abuse.ch, copy `.env.example` to `.env` and fill in what you have.
 
-Typical run:
+To reproduce the example run (the one in `outputs/` and in the report):
 
 ```bash
-python osint_pivot.py --seeds seeds.txt --depth 2 --snapshot "pre-Eastwood-2025-07" --out ./outputs
+python osint_pivot.py --seeds seeds.txt --relations relations_teamcymru.csv --freeze 31.13.195.87 --since 2022-01-01 --depth 2 --snapshot "C2-documented-2022-2026" --out ./outputs
 ```
+Results may differ slightly from the published ones, passive sources change over time (for example, ThreatFox stops returning indicators older than six months).
 
 Or with individual seeds:
 
@@ -81,4 +82,4 @@ The analysis report and the written documentation (`report/`, `docs/`) are © 20
 
 ## Disclaimer
 
-**Defensive** intelligence work based solely on open sources, for research and detection purposes. No interaction with the actor or its live infrastructure. Indicators are published defanged. **TLP:CLEAR.**
+**Defensive** intelligence work based solely on open sources, for research and detection purposes. No interaction with the actor or its live infrastructure. Indicators are published without defanging, for readability. **TLP:CLEAR.**

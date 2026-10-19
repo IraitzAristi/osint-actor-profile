@@ -151,9 +151,9 @@ As an analytic judgment, NoName057(16) remains active but disrupted after Operat
 
 ## Indicators of Compromise (appendix)
 
-IOCs are defanged for safe reading. Confidence is per indicator, treat "context" entries as benign/shared and "lead" entries as unverified.
+IOCs are shown without defanging for readability, handle them with care and do not open them in a browser. Confidence is per indicator, treat "context" entries as benign/shared and "lead" entries as unverified.
 
-| Indicator (defanged) | Type | Context | Confidence |
+| Indicator | Type | Context | Confidence |
 | --- | --- | --- | --- |
 | 31.13.195.87 | IPv4 | Published C2 (2022 to 23), NETERRA BG | high |
 | 87.121.52.9 | IPv4 | Upstream/mirror C2, TCP/5001 | high |

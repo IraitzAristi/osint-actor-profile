@@ -47,11 +47,12 @@ pip install -r requirements.txt
 
 Las **claves de API son opcionales**: la herramienta funciona con las fuentes sin clave (crt.sh, RDAP, RIPEstat, Shodan InternetDB, feeds SSLBL) y usa las que haya configuradas. Para añadir VirusTotal o abuse.ch, copia `.env.example` a `.env` y rellena lo que tengas.
 
-Ejecución típica:
+Para reproducir la ejecución de ejemplo (la de `outputs/` y del informe):
 
 ```bash
-python osint_pivot.py --seeds seeds.txt --depth 2 --snapshot "pre-Eastwood-2025-07" --out ./outputs
+python osint_pivot.py --seeds seeds.txt --relations relations_teamcymru.csv --freeze 31.13.195.87 --since 2022-01-01 --depth 2 --snapshot "C2-documented-2022-2026" --out ./outputs
 ```
+Los resultados pueden variar ligeramente respecto a los publicados, las fuentes pasivas cambian con el tiempo (por ejemplo, ThreatFox deja de devolver indicadores de más de seis meses).
 
 O con semillas sueltas:
 
@@ -79,4 +80,4 @@ El informe de análisis y la documentación escrita (`report/`, `docs/`) son © 
 
 ## Aviso
 
-Trabajo de inteligencia **defensiva** basado únicamente en fuentes abiertas, con fines de investigación y detección. Sin interacción con el actor ni con su infraestructura viva. Los indicadores se publican defangeados. **TLP:CLEAR.**
+Trabajo de inteligencia **defensiva** basado únicamente en fuentes abiertas, con fines de investigación y detección. Sin interacción con el actor ni con su infraestructura viva. Los indicadores se publican sin defang para facilitar la lectura. **TLP:CLEAR.**

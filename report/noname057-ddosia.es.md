@@ -151,9 +151,9 @@ Como valoración de analista, NoName057(16) sigue activo pero disrumpido tras la
 
 ## Indicadores de compromiso (apéndice)
 
-Los IOCs están defangeados para una lectura segura. La confianza es por indicador, trata las entradas de "contexto" como benignas o compartidas y las de "pista" como no verificadas.
+Los IOCs se muestran sin defang para facilitar la lectura, trátalos con precaución y no los abras en un navegador. La confianza es por indicador, trata las entradas de "contexto" como benignas o compartidas y las de "pista" como no verificadas.
 
-| Indicador (defangeado) | Tipo | Contexto | Confianza |
+| Indicador | Tipo | Contexto | Confianza |
 | --- | --- | --- | --- |
 | 31.13.195.87 | IPv4 | C2 publicado (2022 a 23), NETERRA BG | alta |
 | 87.121.52.9 | IPv4 | C2 upstream/espejo, TCP/5001 | alta |
