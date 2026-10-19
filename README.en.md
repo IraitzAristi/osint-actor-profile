@@ -70,6 +70,8 @@ In `outputs/`: nodes and edges (`nodes.csv/json`, `edges.csv/json`), the graph (
 
 The pivoting tool (`osint_pivot.py`) was **developed with AI assistance** as a programming aid. The code was then **reviewed, fixed, improved and simplified by me**: I adjusted the pivoting and enrichment logic, the exclusions (parking/CDN ranges, high fan-out hosts, provider PTRs, bogon addresses), the time filtering by snapshot window and the output format. I understand and stand behind every part of the code.
 
+I removed the Validin provider, which was included in an early version: I could not verify its API route and authentication on the free tier and did not use it in the example run, so I chose not to keep untested code. The screenshots in the process document (v1) show the original `.env.example`, which still included Validin.
+
 The **report analysis**, the **methodological decisions** (what to pivot, what to freeze, what to reject and why, such as the `flotaero.info` candidate discarded by date) and the **confidence-rated assessments** are entirely my own.
 
 ## License
