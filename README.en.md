@@ -52,8 +52,7 @@ pip install -r requirements.txt
 Typical run:
 
 ```bash
-python osint_pivot.py --seeds seeds.txt --depth 2 \
-    --snapshot "pre-Eastwood-2025-07" --out ./outputs
+python osint_pivot.py --seeds seeds.txt --depth 2 --snapshot "pre-Eastwood-2025-07" --out ./outputs
 ```
 
 Or with individual seeds:
@@ -68,7 +67,7 @@ In `outputs/`: nodes and edges (`nodes.csv/json`, `edges.csv/json`), the graph (
 
 ## Development and authorship
 
-The pivoting tool (`osint_pivot.py`) was **developed with AI assistance** as a programming aid. The code was then **reviewed, fixed, improved and simplified by me**: I adjusted the pivoting and enrichment logic, the exclusions (parking/CDN ranges, high fan-out hosts, provider PTRs, bogon addresses), the time filtering by snapshot window and the output format. I understand and stand behind every part of the code.
+Both scripts in the project, the pivoting tool (`osint_pivot.py`) and the graph and STIX/MISP bundle generator (`build_report_artifacts.py`), were **developed with AI assistance** as a programming aid. The code was then **reviewed, fixed, improved and simplified by me**. In `osint_pivot.py` I adjusted the pivoting and enrichment logic, the exclusions (parking/CDN ranges, high fan-out hosts, provider PTRs, bogon addresses), the time filtering by snapshot window and the output format. I understand and stand behind every part of the code.
 
 I removed the Validin provider, which was included in an early version: I could not verify its API route and authentication on the free tier and did not use it in the example run, so I chose not to keep untested code. The screenshots in the process document (v1) show the original `.env.example`, which still included Validin.
 

@@ -50,8 +50,7 @@ Las **claves de API son opcionales**: la herramienta funciona con las fuentes si
 Ejecución típica:
 
 ```bash
-python osint_pivot.py --seeds seeds.txt --depth 2 \
-    --snapshot "pre-Eastwood-2025-07" --out ./outputs
+python osint_pivot.py --seeds seeds.txt --depth 2 --snapshot "pre-Eastwood-2025-07" --out ./outputs
 ```
 
 O con semillas sueltas:
@@ -66,7 +65,7 @@ En `outputs/`: nodos y aristas (`nodes.csv/json`, `edges.csv/json`), el grafo (`
 
 ## Desarrollo y autoría
 
-La herramienta de pivoting (`osint_pivot.py`) se **desarrolló con ayuda de IA** como asistente de programación. El código fue después **revisado, corregido, mejorado y simplificado por mí**: ajusté la lógica de pivoting y de enriquecimiento, las exclusiones (rangos de parking/CDN, hosts con alto fan out, PTR de proveedores, direcciones bogon), el filtrado temporal por ventana de instantánea y el formato de salida. Entiendo y respondo por cada parte del código.
+Los dos scripts del proyecto, la herramienta de pivoting (`osint_pivot.py`) y el generador de grafos y bundles STIX/MISP (`build_report_artifacts.py`), se **desarrollaron con ayuda de IA** como asistente de programación. El código fue después **revisado, corregido, mejorado y simplificado por mí**. En `osint_pivot.py` ajusté la lógica de pivoting y de enriquecimiento, las exclusiones (rangos de parking/CDN, hosts con alto fan out, PTR de proveedores, direcciones bogon), el filtrado temporal por ventana de instantánea y el formato de salida. Entiendo y respondo por cada parte del código.
 
 Eliminé el proveedor Validin, que estaba incluido en una primera versión: no pude verificar la ruta ni la autenticación de su API en el plan gratuito y no lo usé en la ejecución de ejemplo, así que preferí no mantener código sin probar. Las capturas del documento de proceso (v1) muestran el `.env.example` original, que todavía incluía Validin.
 
