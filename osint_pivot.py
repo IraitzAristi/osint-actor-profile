@@ -10,9 +10,9 @@ WHAT IT DOES
 ------------
 Given seed indicators (domains / IPv4 / certificate SHA-256), it enriches and
 pivots them through FREE-TIER, third-party intelligence providers, assigns a
-confidence weight to every relationship using the Phase-2 rubric, filters out
+confidence weight to every relationship using the confidence rubric, filters out
 shared/benign infrastructure (CDN, cloud, dynamic-DNS), and writes a normalized
-graph (nodes + edges, JSON and CSV) ready for Phase 4 (graph render + STIX/MISP).
+graph (nodes + edges, JSON and CSV) ready for build_report_artifacts.py (graph render + STIX/MISP).
 
 SCOPE / PASSIVITY (read this)
 -----------------------------
@@ -34,7 +34,6 @@ ENV VARS (see .env.example)
   ABUSECH_AUTH_KEY   ThreatFox + URLhaus (one key, get it at auth.abuse.ch)
   VT_API_KEY         VirusTotal public API
   OTX_API_KEY        AlienVault OTX
-  VALIDIN_API_KEY    Validin Community (limited API)  [verify route/auth in docs]
 
 USAGE
   python osint_pivot.py --seeds seeds.txt --depth 2 --snapshot "pre-Eastwood-2025-07" \
@@ -70,7 +69,7 @@ except Exception:  # dotenv is optional
 LOG = logging.getLogger("osint_pivot")
 
 # --------------------------------------------------------------------------- #
-# Confidence rubric (Phase 2). Every edge carries one of these weights.        #
+# Confidence rubric. Every edge carries one of these weights.                  #
 # A discovered node is CONFIRMED only with >=1 STRONG or >=2 independent        #
 # MODERATE edges. WEAK edges are context only and never attribute on their own. #
 # --------------------------------------------------------------------------- #
@@ -83,7 +82,7 @@ REL_WEIGHT = {
     "sslbl_listed":        STRONG,    # certificate blacklisted by abuse.ch SSLBL
     "pdns_coresolve":      MODERATE,  # historical A-record link (passive DNS) within window
     "whois_registrant":    MODERATE,  # shared, non-generic registrant email/org
-    "crawl_fingerprint":   MODERATE,  # shared favicon/body hash (Validin crawl)
+    "crawl_fingerprint":   MODERATE,  # shared favicon/body hash
     "shodan_hostname":     MODERATE,  # PTR/hostname observed on the IP by Shodan
     "same_asn":            WEAK,      # same autonomous system  -> context only
     "shared_hosting":      WEAK,      # same netblock/provider  -> context only
