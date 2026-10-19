@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-build_report_artifacts.py -- Phase 4: turn the pivot graph into deliverables.
-
+  build_report_artifacts.py -- turn the pivot graph into deliverables.
+  
 Reads nodes.json / edges.json (produced by osint_pivot.py) and emits:
   graph.html       interactive graph (vis-network via CDN; opens in a browser)
   graph.dot        Graphviz DOT  (render:  dot -Tpng graph.dot -o graph.png)
@@ -326,7 +326,7 @@ def build_misp(nodes, edges, attributed, meta) -> dict:
 
 
 def main(argv=None) -> int:
-    ap = argparse.ArgumentParser(description="Phase 4: graph + STIX/MISP from the pivot output.")
+    ap = argparse.ArgumentParser(description="Graph + STIX/MISP from the pivot output.")
     ap.add_argument("--in", dest="in_dir", default="./outputs")
     ap.add_argument("--out", default="./outputs")
     ap.add_argument("--actor", default="NoName057(16)")
