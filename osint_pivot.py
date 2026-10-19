@@ -396,10 +396,6 @@ class Providers:
         self.abusech = os.getenv("ABUSECH_AUTH_KEY")
         self.vt = os.getenv("VT_API_KEY")
         self.otx = os.getenv("OTX_API_KEY")
-        self.validin = os.getenv("VALIDIN_API_KEY")
-        # Validin: confirm exact route + auth scheme at docs.validin.com/reference
-        # (Community tier = limited API). Defaults below are best-known values.
-        self.validin_base = os.getenv("VALIDIN_BASE", "https://api.validin.com")
         self._sslbl_sha1: set[str] | None = None
 
     def enabled(self) -> list[str]:
@@ -410,8 +406,6 @@ class Providers:
             on.append("virustotal")
         if self.otx:
             on.append("otx")
-        if self.validin:
-            on.append("validin")
         return on
 
     # crt.sh (Certificate Transparency): domain -> SAN siblings
@@ -506,20 +500,6 @@ class Providers:
             f"https://otx.alienvault.com/api/v1/indicators/{seg}/{value}/passive_dns",
             headers={"X-OTX-API-KEY": self.otx}, rate=2.0, host_key="otx")
         return (data or {}).get("passive_dns", []) or []
-
-    # Validin: historical passive DNS (Community = limited)
-    def validin_pdns(self, kind: str, value: str) -> list[dict]:
-        if not self.validin:
-            return []
-        # NOTE: confirm the exact path + auth header at docs.validin.com/reference.
-        seg = "domains" if kind == "domain" else "ips"
-        url = f"{self.validin_base}/api/axon/{seg}/{value}/dns/history"
-        data = self.http.get_json(
-            url, headers={"Authorization": f"Bearer {self.validin}"},
-            rate=2.0, host_key="validin")
-        # Best-effort normalization; adapt to the documented response shape.
-        recs = (data or {}).get("records") or (data or {}).get("data") or []
-        return recs if isinstance(recs, list) else []
 
     # Shodan InternetDB: keyless IP enrichment
     def internetdb(self, ip: str) -> dict | None:
@@ -639,10 +619,6 @@ class Pivoter:
         for r in self.p.otx_pdns("domain", dom):
             if r.get("address"):
                 ip_hits.append((r["address"], "otx", r.get("first")))
-        for r in self.p.validin_pdns("domain", dom):
-            ip = r.get("value") or r.get("ip")
-            if ip:
-                ip_hits.append((ip, "validin", r.get("first_seen")))
         distinct_ips = {ip for ip, _, _ in ip_hits}
         if len(distinct_ips) > DOMAIN_IP_FANOUT_MAX:
             node.attrs["ip_fanout"] = len(distinct_ips)
