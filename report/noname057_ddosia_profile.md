@@ -1,5 +1,7 @@
 # NoName057(16), Threat Actor Profile
 
+> **Translated version.** This report was translated from the Spanish original, which is the reference version: [read it in Spanish](noname057-ddosia.es.md).
+
 > **TLP:CLEAR** · **Report date:** 2026-09-24 · **Analyst:** Iraitz Aristi · **Version:** 1.0
 > **Data cutoff (snapshot):** 2026-09-20 · **Collection window:** documented C2 & management infrastructure, 2022 to 2026
 
